@@ -1,0 +1,15 @@
+<div class="row align-items-stretch">
+    <ng-container *ngIf="clients">
+        <div class="col-6 col-lg-6 col-md-6 my-3" *ngFor="let client of clients">
+            <p-fieldset [legend]="client.name" class="col-lg-6 legend" [toggleable]="true">
+                <div class="d-flex">
+                    <img [src]="client.img" alt="Client Image" class="logo-img">
+
+                    <p class="fs-6">
+                        {{client.description}}
+                    </p>
+                </div>
+            </p-fieldset>
+        </div>
+    </ng-container>
+</div>

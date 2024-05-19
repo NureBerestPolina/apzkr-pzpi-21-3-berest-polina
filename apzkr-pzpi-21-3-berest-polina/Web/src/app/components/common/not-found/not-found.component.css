@@ -1,0 +1,24 @@
+.not-found {
+    text-align: center;
+    padding: 50px;
+}
+
+h1 {
+    font-size: 3rem;
+    color: #ff5722;
+}
+
+p {
+    font-size: 1.5rem;
+}
+
+a {
+    display: inline-block;
+    margin-top: 20px;
+    font-size: 1.2rem;
+    text-decoration: none;
+    background-color: #ff5722;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+}

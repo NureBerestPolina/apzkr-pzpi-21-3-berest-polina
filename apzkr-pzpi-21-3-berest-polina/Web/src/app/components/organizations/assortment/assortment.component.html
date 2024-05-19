@@ -1,0 +1,48 @@
+<div class="container">
+
+    <h1 class="mt-3" i18n>Assortment of goods in {{organization?.name || "shop"}}</h1>
+
+    <div class="d-flex justify-content-end mt-4">
+        <a [routerLink]="['/shopManagement', organizationId, 'add-good']" class="btn btn-warning" i18n>Add good to my assortment</a>
+        <a [routerLink]="['/shopManagement', organizationId, 'add-producer']" class="ml-2 btn btn-outline-warning" i18n>Add a new producer</a>
+    </div>
+
+    <ng-container *ngIf="goods$ | async as goods">
+
+        <p-dropdown [options]="uniqueCategories" [(ngModel)]="selectedCategory"  [showClear]="false" placeholder="Select a category"></p-dropdown>
+
+        <button class = "btn btn-outline-primary ml-1" (click)="selectedCategory = ''" i18n>Clear</button>
+
+        <table class="table mt-3 table-bordered">
+            <thead>
+                <tr>
+                    <th i18n>Title</th>
+                    <th i18n>Category</th>
+                    <th i18n>Description</th>
+                    <th i18n>Price (UAH)</th>
+                    <th i18n>Measurement Unit</th>
+                    <th i18n>Amount available</th>
+                    <th i18n>Producer</th>
+                    <th i18n>Country</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let good of filterGoods(goods)" [ngStyle]="{'background': getStateColor(good.needsCooling)}">
+                    <td>{{good.name}}</td>
+                    <td>{{good.category.name}}</td>
+                    <td>{{good.description}}</td>
+                    <td>{{good.price}}</td>
+                    <td>{{good.measurementUnit}}</td>
+                    <td>{{good.amountInStock}}</td>
+                    <td>{{good.producer.name}}</td>
+                    <td>{{good.producer.producerCountry}}</td>
+                    <td>
+                        <a [routerLink]="['/shopManagement', organizationId, 'edit-good', good.id]" class="btn btn-outline-warning" i18n>Edit good</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </ng-container>
+
+</div>

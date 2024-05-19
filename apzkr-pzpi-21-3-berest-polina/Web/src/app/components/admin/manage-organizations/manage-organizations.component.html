@@ -1,0 +1,48 @@
+<p-toast></p-toast>
+<div class="container">
+
+    <h1 class="mt-3" i18n>The organizations registered in the En Route system:</h1>
+
+    <ng-container *ngIf="organizations$ | async as organizations">
+        <ng-container *ngIf="organizations.length > 0; else noRegisteredUsers">
+            <table class="table mt-3 table-bordered">
+                <thead>
+                    <tr>
+                        <th i18n>Organization</th>
+                        <th i18n>Description</th>
+                        <th i18n>Registered on</th>
+                        <th i18n>Manager</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let organization of organizations" [ngStyle]="{'background': getStateColor(organization?.isBlocked)}">
+                        <td>{{organization.name}}</td>
+                        <td>{{organization.description}}</td>
+                        <td>{{organization.registerDate | date }}</td>
+                        <td>{{organization?.manager?.name}}<br><i>{{organization?.manager?.email}}</i></td>
+                        <td>
+                                <div class="d-flex justify-content-center">
+                                    <ng-container *ngIf="organization?.isBlocked; else showBlockAction">
+                                        <button (click)="unblockOrganization(organization)" pButton pRipple class="btn btn-success" 
+                                        i18n>Unblock organization</button>
+                                    </ng-container>
+                                    <ng-template #showBlockAction>
+                                        <button (click)="blockOrganization(organization)" pButton pRipple class="btn btn-danger" 
+                                        i18n>Block organization</button>
+                                    </ng-template> 
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </ng-container>
+    </ng-container>
+
+    <ng-template #noRegisteredUsers>
+        <div class="alert alert-info" role="alert" i18n>
+            There are no organizations registered yet.
+        </div>
+    </ng-template>
+</div>
+

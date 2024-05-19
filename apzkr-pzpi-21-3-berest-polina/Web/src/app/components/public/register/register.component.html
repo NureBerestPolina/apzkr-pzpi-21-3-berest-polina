@@ -1,0 +1,122 @@
+<div class="container">
+    <div class="mt-5">
+        <div class="col-12 col-md-8 col-lg-6 mx-auto">
+             <h1 i18n>Register to take advantage of En Route:</h1>
+
+             <form #form="ngForm" (ngSubmit)="onFormSubmit()">
+
+                <div class="mt-5 col-12">
+                    <span class="p-float-label">
+                      <input pInputText type="email" id="email" name="email" [(ngModel)]="model.email" class="col-12"
+                        required email #emailField="ngModel" />
+                      <label htmlFor="email" i18n>Email</label>
+                    </span>
+
+                    <div *ngIf="emailField.invalid && (emailField.dirty || emailField.touched)">
+                      <div *ngIf="emailField?.errors?.['required']" class="alert alert-danger col-12" i18n>
+                        Email is required.
+                      </div>
+                      <div *ngIf="emailField?.errors?.['email']" class="alert alert-danger col-12" i18n>
+                        Invalid email address.
+                      </div>
+                    </div>
+                </div>
+
+                <div class="mt-4 col-12">
+                    <span class="p-float-label">
+                      <input pInputText type="text" id="name" name="name" [(ngModel)]="model.name" class="col-12"
+                        required minlength="10" #nameField="ngModel" />
+                      <label htmlFor="name" i18n>Your name</label>
+                    </span>
+
+                    <div *ngIf="nameField.invalid && (nameField.dirty || nameField.touched)">
+                      <div *ngIf="nameField?.errors?.['required']" class="alert alert-danger col-12" i18n>
+                        Name is required.
+                      </div>
+                      <div *ngIf="nameField.errors?.['minlength']" class="alert alert-danger col-12" i18n>
+                        Name must be at least 10 characters long.
+                      </div> 
+                    </div>
+                </div>
+
+                <div class="mt-4 col-12">
+                    <span class="p-float-label">
+                      <input pInputText type="text" id="organizationName" name="organizationName" [(ngModel)]="model.organizationName" class="col-12"
+                        required minlength="5" #organizationNameField="ngModel" />
+                      <label htmlFor="organizationName" i18n>Your title company / organization name</label>
+                    </span>
+
+                    <div *ngIf="organizationNameField.invalid && (emailField.dirty || emailField.touched)">
+                      <div *ngIf="organizationNameField?.errors?.['required']" class="alert alert-danger col-12" i18n>
+                        Name is required.
+                      </div>
+                      <div *ngIf="organizationNameField.errors?.['minlength']" class="alert alert-danger col-12" i18n>
+                        Name must be at least 5 characters long.
+                      </div> 
+                    </div>
+                </div>
+
+                <div class="mt-4 col-12">
+                    <span class="p-float-label">
+                        <p-password [(ngModel)]="model.password" id="password" name="password"
+                        [toggleMask]="true" [feedback]="true" class="col-12 p-0" [style]="{'width':'100%'}"
+                        [inputStyle]="{'width':'100%'}" required
+                        (ngModelChange)="resetPasswordError()"></p-password>
+                        <label for="password" i18n>Password</label>
+                    </span>
+                </div>
+
+                <div class="col-12 alert alert-danger" *ngIf="isShortPassword" i18n>
+                    Password should be of minimum 6 characters.
+                </div>
+
+                <div class="mt-4 col-12">
+                    <span class="p-float-label">
+                        <p-password [(ngModel)]="confirmPassword" id="confirmPassword" name="confirmPassword"
+                        [toggleMask]="true" [feedback]="false" class="col-12 p-0" [style]="{'width':'100%'}"
+                        [inputStyle]="{'width':'100%'}" required
+                        (ngModelChange)="resetPasswordError()"></p-password>
+                        <label for="confirmPassword" i18n>Confirm the password</label>
+                    </span>
+                </div>
+
+                <div class="col-12 alert alert-danger" *ngIf="passwordsNotMatch" i18n>
+                    Passwords do not match.
+                </div>
+
+                <div class="mt-4 col-12">                  
+                    <span class="p-float-label">
+                        <textarea id="description" name="description"
+                         rows="5" [(ngModel)]="model.description" 
+                         class="col-12" pInputTextarea required #descriptionField="ngModel"
+                         minlength="10" maxlength="200"></textarea>
+                        <label for="description" i18n>Company / Organization short description</label>
+                    </span>
+
+                    <div *ngIf="descriptionField.invalid && (descriptionField.dirty || descriptionField.touched)">
+                      <div *ngIf="descriptionField?.errors?.['required']" class="alert alert-danger col-12" i18n>
+                        Company short description is required.
+                      </div>
+                      <div *ngIf="descriptionField?.errors?.['minlength']" class="alert alert-danger col-12" i18n>
+                        Company short description should have at least 10 characters.
+                      </div>
+                      <div *ngIf="descriptionField?.errors?.['maxlength']" class="alert alert-danger col-12" i18n>
+                        Company short description maximum size is 200 characters.
+                      </div>
+                    </div>
+                </div>
+
+
+
+                <div class="mt-4 flex-column align-items-center">
+                    <button type="submit" [disabled]="emailField.invalid || isShortPassword
+                    || passwordsNotMatch || nameField.invalid || organizationNameField.invalid || descriptionField.invalid" 
+                    class="btn btn-success btn-block mt-3 btn-lg w-100" i18n>Register</button>
+                </div>
+             </form>
+
+             <h5 class="mt-5 pb-5">Already have an accaunt? <a [routerLink]="['/login']" i18n>Log in!</a></h5>
+        </div>
+    </div>
+</div>
+

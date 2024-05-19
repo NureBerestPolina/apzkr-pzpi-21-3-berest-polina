@@ -1,0 +1,33 @@
+<div class="container">
+    <div class="mt-5">
+        <div class="col-6 col-md-4 col-lg-4 mx-auto">
+             <h1 i18n>Log in to proceed:</h1>
+
+             <form #form="ngForm" (ngSubmit)="onFormSubmit()">
+                <div class="mt-5 col-12">
+                    <span class="p-float-label">
+                        <input pInputText type="email" id="email" name="email"
+                        [(ngModel)]="model.email" class="col-12" />
+                        <label for="email" i18n>Email</label>
+                    </span>
+                </div>
+
+                <div class="mt-4 col-12">
+                    <span class="p-float-label">
+                        <p-password [(ngModel)]="model.password" id="password" name="password"
+                        [toggleMask]="true" [feedback]="false" class="col-12 p-0" [style]="{'width':'100%'}"
+                        [inputStyle]="{'width':'100%'}"></p-password>
+                        <label for="password" i18n>Password</label>
+                    </span>
+                </div>
+
+                <div class="mt-4 flex-column align-items-center">
+                    <button type="submit" class="btn btn-outline-success btn-block w-100 btn-lg" i18n>Log me in!</button>
+                </div>
+             </form>
+
+             <h5 i18n class="mt-5 pb-5">Did not join us yet? <a [routerLink]="['/register']" >Click to Register!</a></h5>
+        </div>
+    </div>
+</div>
+

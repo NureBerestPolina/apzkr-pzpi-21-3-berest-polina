@@ -1,0 +1,35 @@
+<p-toast></p-toast>
+
+<div class="container">
+        <h1 class="mt-3" i18n>Create a unique link for the IoT pickup counter device (to connect it to the system)</h1>
+
+        <form #form="ngForm" (ngSubmit)="onFormSubmit()">
+                <div class="mt-3">               
+                        <span class="p-float-label">
+                            <textarea id="uri" name="uri"
+                             rows="5" [(ngModel)]="uri" 
+                             class="col-12" pInputTextarea  required #uriField="ngModel"
+                             minlength="5" maxlength="300"></textarea>
+                            <label for="uri" i18n>URI:</label>
+                        </span>
+    
+                        <div *ngIf="uriField.invalid && (uriField.dirty || uriField.touched)">
+                          <div *ngIf="uriField?.errors?.['required']" class="alert alert-danger col-12" i18n>
+                            URI is required.
+                          </div>
+                          <div *ngIf="uriField?.errors?.['minlength']" class="alert alert-danger col-12" i18n>
+                            URI should have at least 5 characters.
+                          </div>
+                          <div *ngIf="uriField?.errors?.['maxlength']" class="alert alert-danger col-12" i18n>
+                            URI maximum size is 300 characters.
+                          </div>
+                        </div>
+                </div>
+
+                <div class="mt-5 mb-5 d-flex justify-content-end">
+                    <button type="submit" class="btn btn-success" 
+                    [disabled]="uriField.invalid" i18n>Mark pickup counter installation request as fulfilled</button>
+                </div>
+        </form>
+</div>
+

@@ -1,0 +1,62 @@
+<nav class="navbar navbar-expand-lg p-3 navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">🛍️ En Route </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" [routerLink]="['/']" i18n>About us</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#our-clients" i18n>Client organizations</a>
+          </li>
+
+          <ng-container *ngIf="user?.roles?.includes(role.Admin)">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" i18n>
+              Super admin panel
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" [routerLink]="['admin/counters-installation-requests']" i18n>Manage Pickup counters installation requests</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" [routerLink]="['admin/organizations-management']" i18n>Manage organizations</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" [routerLink]="['admin/billing/statistics']" i18n>Manage billing</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" [routerLink]="['admin/techinspection-requests-management']" i18n>Manage tech-inspection requests</a></li>
+            </ul>
+          </li>
+          </ng-container>   
+
+          <ng-container *ngIf="user?.roles?.includes(role.Sysadmin)">
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="['admin/system-administration']" i18n>Manage system</a>
+            </li>
+          </ng-container>
+
+        </ul>
+        <div class="d-flex">  
+          <ng-container *ngIf="user === undefined; else showLogout">
+           <!-- Show Login button -->
+           <a [routerLink]="['/login']" class="btn btn-primary" i18n> <i class="bi bi-person-hearts"></i> Log in to join the program!</a>
+          </ng-container> 
+
+          <ng-template #showLogout> 
+           <div class="d-flex align-items-center">
+             <span>{{user?.name}}</span>
+
+            <ng-container *ngIf="user?.roles?.includes(role.OrganizationManager) && organization">
+                <a [routerLink]="['shopManagement', organization.id, 'counters']" class="btn btn-success ms-3" i18n>My pickup counters</a>
+                <a [routerLink]="['shopManagement', organization.id, 'assortment']" class="btn btn-success ms-3" i18n>My goods</a>
+            </ng-container>
+                     
+             <button class="btn btn-outline-danger ms-3" (click)="onLogout()" i18n><i class="bi bi-person"></i>Log out</button>
+           </div>
+          </ng-template>
+       </div>
+      </div>
+    </div>
+  </nav>
+

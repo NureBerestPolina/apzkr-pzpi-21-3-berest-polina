@@ -1,0 +1,31 @@
+<div class="grid grid-nogutter surface-section text-800">
+    <div class="col-12 md:col-6 p-6 text-center md:text-left flex align-items-center ">
+        <section>
+            <span class="block text-6xl font-bold mb-1" i18n>Stay customer-friendly</span>
+            <div class="text-6xl text-primary font-bold mb-3" i18n>with our pickup counters!</div>
+            <p class="mt-0 mb-4 text-700 line-height-3" i18n>The future is here! Do not make your customers wait in queues in your shop or hurry to a post office to pick their parcels.<br><br>
+            <b> We offer an another way! Let them pick up their orders in convenient places:</b> on the first floor of their offices, shopping malls, in metro or just outside of your shop. <i>Covid is still here, remember?</i><br>
+            </p>
+
+            <h3>Why En Route? </h3>
+            <i><ul class="text-700">
+                <li i18n>Easy to use</li>
+                <li i18n>Safe</li>
+                <li i18n>Easy to integrate with drone / robot delivery</li>
+                <li i18n>And just convenient!</li>
+            </ul></i>
+            <br>
+          
+            <button pButton pRipple type="button" [routerLink]="['/register']" class="mr-3 p-button-raised" i18n>Get started</button>
+            <button pButton pRipple type="button" [routerLink]="['/register']" class="p-button-outlined" i18n>Get started, but of different color</button>
+        </section>
+    </div>
+    <div class="col-12 md:col-6 overflow-hidden">
+        <img src="assets/counter.png" alt="Image" class="md:ml-auto block md:h-full" style="clip-path: polygon(8% 0, 100% 0%, 100% 100%, 0 100%)">
+    </div>
+</div>
+<div class="separator"></div>
+<div class="container" id="our-clients">
+    <span class="block text-6xl font-bold mb-1" i18n>We are already providing our services for:</span>
+    <app-client-list></app-client-list>
+</div>

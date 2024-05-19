@@ -1,0 +1,90 @@
+<p-toast></p-toast>
+
+<div class="container">
+    <div class="mt-5">
+        <div class="col-12 col-md-8 col-lg-6 mx-auto">
+            <h1 i18n>Make a request for Pickup counter installation:</h1>
+
+            <form #form="ngForm" (ngSubmit)="onFormSubmit()">
+                <div class="mt-5 col-12">
+                    <span class="p-float-label">
+                        <input pInputText id="address" name="address" [(ngModel)]="model.address" class="col-12" required
+                            minlength="5" #addressField="ngModel" />
+                        <label htmlFor="name" i18n>Address of installation</label>
+                    </span>
+
+                    <div *ngIf="addressField.invalid && (addressField.dirty || addressField.touched)">
+                        <div *ngIf="addressField?.errors?.['required']" class="alert alert-danger col-12" i18n>
+                            Address is required.
+                        </div>
+                        <div *ngIf="addressField?.errors?.['minlength']" class="alert alert-danger col-12" i18n>
+                            Address must be at least 5 characters long.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4 col-12">
+                    <span class="p-float-label">
+                        <textarea id="placementDescription" name="placementDescription" rows="5" [(ngModel)]="model.placementDescription"
+                            class="col-12" pInputTextarea #placementDescriptionField="ngModel" maxlength="200"></textarea>
+                        <label for="placementDescription" i18n>Placement description</label>
+                    </span>
+
+                    <div *ngIf="placementDescriptionField.invalid &&
+                (placementDescriptionField.dirty || placementDescriptionField.touched)">
+                        <div *ngIf="placementDescriptionField?.errors?.['maxlength']" class="alert alert-danger col-12" i18n>
+                            Placement description maximum size is 200 characters.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-2 col-12">
+                    <label htmlFor="cellCountField" i18n>How many cells does the counter need to have?</label>
+                    <p-inputNumber #cellCountField="ngModel" [styleClass]="'col-12 p-0'" [showClear]="true" class="col-12 p-0"
+                        name="cellCount" [(ngModel)]="model.cellCount" [inputId]="'cellCountField'" [required]="true"
+                        [min]="1" [max]="100">
+                    </p-inputNumber>
+                
+                    <div *ngIf="cellCountField.invalid && (cellCountField.dirty || cellCountField.touched)">
+                        <div *ngIf="cellCountField?.errors?.['required']" class="alert alert-danger col-12" i18n>
+                            Cell count is required.
+                        </div>
+                        <div *ngIf="cellCountField?.errors?.['min']" class="alert alert-danger col-12" i18n>
+                            Count must be greater than 0.
+                        </div>
+                        <div *ngIf="cellCountField?.errors?.['max']" class="alert alert-danger col-12" i18n>
+                            Count must be less than 100.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-2 col-12">
+                    <label htmlFor="cellWithTempControlCountField" i18n>How many of them should have temperature controlling unit?</label>
+                    <p-inputNumber #cellWithTempControlCountField="ngModel" [styleClass]="'col-12 p-0'" [showClear]="true" class="col-12 p-0"
+                        name="cellWithTempControlCount" [(ngModel)]="model.cellWithTempControlCount" [inputId]="'cellWithTempControlCountField'" [required]="true"
+                        [max]="100">
+                    </p-inputNumber>
+                
+                    <div *ngIf="cellWithTempControlCountField.invalid && (cellWithTempControlCountField.dirty || cellWithTempControlCountField.touched)">
+                        <div *ngIf="cellWithTempControlCountField?.errors?.['required']" class="alert alert-danger col-12" i18n>
+                            Cell count is required.
+                        </div>
+                        <div *ngIf="cellWithTempControlCountField?.errors?.['max']" class="alert alert-danger col-12" i18n>
+                            Count must be less than 100.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4 flex-column align-items-center">
+                    <button pButton pRipple type="submit" [disabled]="addressField.invalid ||
+                                                      placementDescriptionField.invalid ||
+                                                      cellCountField.invalid ||
+                                                      cellWithTempControlCountField.invalid
+                                                    " class="btn btn-success btn-block mt-3 btn-lg w-100" i18n>
+                        Send my request to install the counter
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

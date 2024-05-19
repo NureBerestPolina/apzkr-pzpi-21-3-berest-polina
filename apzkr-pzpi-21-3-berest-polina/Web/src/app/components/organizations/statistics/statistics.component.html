@@ -1,0 +1,23 @@
+<div class="container">
+
+    <h1 class="mt-3" i18n>Pickup counters usage statistics:</h1>
+
+<table *ngIf="organizationStatistics" class="table mt-3 table-bordered table-striped">
+    <thead>
+      <tr>
+        <th i18n>Pickup Counter</th>
+        <th i18n>Orders in the Counter</th>
+        <th i18n>Sales Revenue in the Counter</th>
+        <th i18n>The Most Popular Good in the Counter</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let stat of organizationStatistics">
+        <td>{{ stat.pickupCounterId }}<br>{{ stat.pickupCounterAddress }}<br>({{ stat.pickupCounterPlacementDescription }})</td>
+        <td>{{ stat.ordersCount }}</td>
+        <td>{{ stat.totalSalesSum | currency }}</td>
+        <td *ngIf="stat.mostPopularGood">{{ stat.mostPopularGood.name }},<br>{{ stat.mostPopularGood.description }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,127 @@
+<div class="container">
+    <ng-container *ngIf="model">
+        <div class="mt-5">
+            <div class="col-12 col-md-8 col-lg-6 mx-auto">
+                <h1 i18n>Edit good {{model.name}}:</h1>
+
+                <form #form="ngForm" (ngSubmit)="onFormSubmit()">
+                    <div class="mt-5 col-12">
+                        <span class="p-float-label">
+                            <input pInputText id="name" name="name" [(ngModel)]="model.name" class="col-12" required
+                            minlength="2" #nameField="ngModel" />
+                            <label htmlFor="name" i18n>Name</label>
+                        </span>
+
+                        <div *ngIf="nameField.invalid && (nameField.dirty || nameField.touched)">
+                            <div *ngIf="nameField?.errors?.['required']" class="alert alert-danger col-12" i18n>
+                                Name is required.
+                            </div>
+                            <div *ngIf="nameField?.errors?.['minlength']" class="alert alert-danger col-12" i18n>
+                                Name must be at least 2 characters long.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 col-12">
+                        <label htmlFor="priceField" i18n>Price</label>
+                        <p-inputNumber #priceField="ngModel" [styleClass]="'col-12 p-0'" [showClear]="true"
+                            class="col-12 p-0" name="price" [(ngModel)]="model.price" [inputId]="'priceField'"
+                            mode="currency" currency="UAH" [required]="true" [min]="1" [max]="100000">
+                        </p-inputNumber>
+
+
+                        <div *ngIf="priceField.invalid && (priceField.dirty || priceField.touched)">
+                            <div *ngIf="priceField?.errors?.['required']" class="alert alert-danger col-12" i18n>
+                                Price is required.
+                            </div>
+                            <div *ngIf="priceField?.errors?.['min']" class="alert alert-danger col-12" i18n>
+                                Price must be greater than 0.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 col-12">
+                        <span class="p-float-label">
+                            <textarea id="description" name="description" rows="5" [(ngModel)]="model.description"
+                                class="col-12" pInputTextarea #descriptionField="ngModel" maxlength="200"></textarea>
+                            <label for="description" i18n>Good description</label>
+                        </span>
+
+                        <div *ngIf="descriptionField.invalid &&
+                (descriptionField.dirty || descriptionField.touched)">
+                            <div *ngIf="descriptionField?.errors?.['maxlength']" class="alert alert-danger col-12" i18n>
+                                Good description maximum size is 200 characters.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 col-12">
+                        <label for="measurementUnit" class="form-label" i18n>Select a measurement unit for this good:
+                        </label>
+                        <select [(ngModel)]="model.measurementUnit" name="measurementUnit" id="measurementUnit"
+                            class="form-control" [required]="true">
+                            <option value="items">Items</option>
+                            <option value="kg">Kilograms (kg)</option>
+                            <option value="ml">Milliliters (ml)</option>
+                            <option value="l">Liters (l)</option>
+                        </select>
+                    </div>
+
+                    <div class="mt-4 col-12">
+                        <label for="producerId" class="form-label" i18n>Select the producer: </label>
+                        <ng-container *ngIf="producers$ | async as producers">
+                            <select [(ngModel)]="model.producer.id" name="producerId" id="producerId"
+                                class="form-control">
+                                <option *ngFor="let producer of producers" [value]="producer.id">{{producer.name}},
+                                    {{producer.producerCountry}}</option>
+                            </select>
+                        </ng-container>
+                    </div>
+
+                    <div class="mt-4 col-12">
+                        <label for="categoryId" class="form-label" i18n>Select good's category: </label>
+                        <ng-container *ngIf="categories$ | async as categories">
+                            <select [(ngModel)]="model.category.id" name="categoryId" id="categoryId"
+                                class="form-control">
+                                <option *ngFor="let category of categories" [value]="category.id">{{category.name}}
+                                </option>
+                            </select>
+                        </ng-container>
+                    </div>
+
+                    <div class="mt-4 col-12">
+                        <label htmlFor="amountInStockField" i18n>Amount to be added to the stock</label>
+                        <p-inputNumber #amountInStockField="ngModel" [styleClass]="'col-12 p-0'" [showClear]="true"
+                            class="col-12 p-0" name="amountInStock" [(ngModel)]="model.amountInStock"
+                            [inputId]="'amountInStockField'" [required]="true" [min]="1" [max]="100000">
+                        </p-inputNumber>
+
+                        <div
+                            *ngIf="amountInStockField.invalid && (amountInStockField.dirty || amountInStockField.touched)">
+                            <div *ngIf="amountInStockField?.errors?.['required']" class="alert alert-danger col-12"
+                                i18n>
+                                Amount is required.
+                            </div>
+                            <div *ngIf="amountInStockField?.errors?.['min']" class="alert alert-danger col-12" i18n>
+                                Amount must be greater than 0.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 col-12">
+                        <p-checkbox [(ngModel)]="model.needsCooling" [binary]="true" name="needsCooling"
+                            inputId="needsCoolingField"></p-checkbox>
+                        <label class="pl-3" for="needsCoolingField" i18n><i class="bi bi-thermometer-snow"></i> This
+                            product needs to be stored in a cool place / in a fridge</label>
+                    </div>
+
+                    <div class="mt-5 mb-5 d-flex justify-content-end">
+                        <button type="submit" class="btn btn-success" 
+                        [disabled]="nameField.invalid || descriptionField.invalid || priceField.invalid || amountInStockField.invalid" i18n>Save changes</button>
+                        <button type="button" class="btn btn-danger ms-3" (click)="onDelete()" i18n>Delete good</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </ng-container>
+</div>

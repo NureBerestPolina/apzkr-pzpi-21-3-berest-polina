@@ -1,0 +1,79 @@
+<div class="container">
+
+    <h1 class="mt-3" i18n>Pickup counters used by my shop:</h1>
+
+    <div class="d-flex justify-content-end mt-4">
+        <a [routerLink]="['/shopManagement', organizationId, 'make-counter-installation-request']" class="btn btn-success" i18n>Make request for a Pickup counter installation</a>
+        <a [routerLink]="['/shopManagement', organizationId, 'counters', 'statistics']" class="ml-2 btn btn-outline-warning" i18n>Get counters statistics</a>
+    </div>
+
+    <ng-container *ngIf="counters$ | async as counters">
+        <table class="table mt-3 table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th i18n>Address</th>
+                    <th i18n>Location description</th>
+                    <th i18n>Cell count</th>
+                    <th i18n>Cell with Temperature control count</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let counter of counters">
+                    <ng-container *ngIf="!counter.isDeleted">
+                        <td>{{counter.address}}</td>
+                        <td>{{counter.placementDescription}}</td>
+                        <td>{{counter.cellCount}}</td>
+                        <td>{{counter.cellWithTempControlCount}}</td>
+                        <td class="text-center">
+                            <div class="d-inline-block">
+                            <a class="btn btn-warning mx-2" pButton pRipple (click)="onUninstall(counter.id)" i18n>Refuse from using the counter</a>
+                            </div>
+                        </td>
+                    </ng-container>
+                </tr>
+            </tbody>
+        </table>
+    </ng-container>
+
+</div>
+
+<div class="container">
+
+    <h1 class="mt-5" i18n>My requests for Pickup counters installation:</h1>
+
+    <ng-container *ngIf="requests$ | async as requests">
+        <ng-container *ngIf="requests.length > 0; else noRequests">
+            <table class="table mt-3 table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th i18n>Address</th>
+                        <th i18n>Location description</th>
+                        <th i18n>Cell count</th>
+                        <th i18n>Cell with Temperature control count</th>
+                        <th i18n>Creation date</th>
+                        <th i18n>Request status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let request of requests">
+                        <script>console.log(request)</script>
+                        <td>{{request.address}}</td>
+                        <td>{{request.placementDescription}}</td>
+                        <td>{{request.cellCount}}</td>
+                        <td>{{request.cellWithTempControlCount}}</td>
+                        <td>{{request.requestedTime | date}}</td>
+                        <td>{{request.requestStatus}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </ng-container>
+    </ng-container>
+
+    <ng-template #noRequests>
+        <div class="alert alert-info" role="alert" i18n>
+            You have no Pickup counters installation requests yet. Make one!
+        </div>
+    </ng-template>
+
+</div>

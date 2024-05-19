@@ -1,0 +1,99 @@
+<p-toast></p-toast>
+<div class="container">
+
+    <h1 class="mt-3" i18n>Requests about Pickup counters Installation:</h1>
+
+    <ng-container *ngIf="requestsInstall$ | async as requestsInstall">
+        <ng-container *ngIf="requestsInstall.length > 0; else noRequestsInstall">
+            <table class="table mt-3 table-bordered">
+                <thead>
+                    <tr>
+                        <th i18n>Company</th>
+                        <th i18n>Address</th>
+                        <th i18n>Location description</th>
+                        <th i18n>Cell count</th>
+                        <th i18n>Cell with Temperature control count</th>
+                        <th i18n>Created on</th>
+                        <th i18n>Answered on</th>
+                        <th i18n>Request status</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let request of requestsInstall" [ngStyle]="{'background': getRequestStatusColor(request.requestStatus)}">
+                        <td>{{request.organization.name}}</td>
+                        <td>{{request.address}}</td>
+                        <td>{{request.placementDescription}}</td>
+                        <td>{{request.cellCount}}</td>
+                        <td>{{request.cellWithTempControlCount}}</td>
+                        <td>{{request.requestedTime | date}}</td>
+                        <td>{{request.fulfilledTime| date}}</td>
+                        <td>{{request.requestStatus}}</td>
+                        <td>
+                                <div class="mt-5 mb-5 d-flex justify-content-end">
+                                    <ng-container *ngIf="request.requestStatus == status.Unseen">
+                                        <button (click)="onAccept(request)" pButton pRipple class="btn btn-success" 
+                                        i18n>Approve installation</button>
+        
+                                        <button (click)="onReject(request)" pButton pRipple class="btn btn-danger ms-3" 
+                                        i18n>Reject request</button>
+                                    </ng-container>
+                                    <ng-container *ngIf="request.requestStatus == status.Approved">
+                                        <button [routerLink]="['/admin/counter-installation-requests/' + request.id + '/add-uri']" 
+                                        pButton pRipple class="btn btn-success" 
+                                        i18n>Add counter to the system</button>
+                                    </ng-container> 
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </ng-container>
+    </ng-container>
+
+    <ng-template #noRequestsInstall>
+        <div class="alert alert-info" role="alert" i18n>
+            There are no requests about Pickup counters installation yet.
+        </div>
+    </ng-template>
+</div>
+
+<div class="container">
+
+    <h1 class="mt-5" i18n>Requests about Pickup counters Deinstallation:</h1>
+
+    <ng-container *ngIf="requestsDeinstall$ | async as requestsDeinstall">
+        <ng-container *ngIf="requestsDeinstall.length > 0; else noRequestsDeinstall">
+            <table class="table mt-3 table-bordered">
+                <thead>
+                    <tr>
+                        <th i18n>Owner organization</th>
+                        <th i18n>Placement description</th>
+                        <th i18n>Created on</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let request of requestsDeinstall">
+                        <td>{{request.counter.ownerOrganization.name}}</td>
+                        <td>{{request.counter.address}},<br>{{request.counter.placementDescription}}</td>
+                        <td>{{request.requestedTime | date: 'dd.MM.yyyy' }}</td>
+                        <td>
+                                <div class="mt-5 mb-5 d-flex justify-content-center">
+                                    <button (click)="onDeinstall(request.id)" pButton pRipple
+                                    class="btn btn-danger" 
+                                    i18n>Confirm deinstallation</button>
+                                </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </ng-container>
+    </ng-container>
+
+    <ng-template #noRequestsDeinstall>
+        <div class="alert alert-info" role="alert" i18n>
+            There are no requests about Pickup counters deinstallation yet.
+        </div>
+    </ng-template>
+</div>

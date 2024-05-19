@@ -1,0 +1,11 @@
+{
+  "EnterDoorOpenCount": "Enter Maximum Cell Door Open Count before Counter tech inspection will be needed: ",
+  "EnterMinTemperature": "Enter Min normal Temperature needed for cells with controlled temperature (in F): ",
+  "EnterMaxTemperature": "Enter Max normal Temperature needed for cells with controlled temperature (in F): ",
+  "EnterId": "Enter device ID:",
+  "InvalidInputDoorOpenCount": "Invalid input for Max Door Open Count. Please enter a valid integer.",
+  "InvalidInputMinTemperature": "Invalid input for Min Temperature (in F). Please enter a valid number.",
+  "InvalidInputMaxTemperature": "Invalid input for Max Temperature (in F). Please enter a valid number.",
+  "InvalidInputId": "Invalid input of ID. Please, input ID from the manual.",
+  "Settings": "Settings: {0}"
+}

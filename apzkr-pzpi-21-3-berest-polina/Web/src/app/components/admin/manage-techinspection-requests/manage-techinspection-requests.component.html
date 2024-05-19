@@ -1,0 +1,45 @@
+<p-toast></p-toast>
+<div class="container">
+
+    <h1 class="mt-3" i18n>Requests about Tech-inspection of the Pickup Counters:</h1>
+
+    <ng-container *ngIf="requests$ | async as requests">
+        <ng-container *ngIf="requests.length > 0; else noRequestsInstall">
+            <table class="table mt-3 table-bordered">
+                <thead>
+                    <tr>
+                        <th i18n>Cell id</th>
+                        <th i18n>Temperature inside<br>when request was created</th>
+                        <th i18n>Doors opened count<br>when request was created</th>
+                        <th i18n>Status</th>
+                        <th i18n>Created on</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let request of requests">
+                        <td>{{request.cell.id}}</td>
+                        <td>{{request.temperature}}</td>
+                        <td>{{request.opensCount}}</td>
+                        <td>{{request.status}}</td>
+                        <td>{{request.requestedTime | date }}</td>
+                        <td>
+                            <div class="mt-5 mb-5 d-flex justify-content-end">
+                                <ng-container *ngIf="request.status == status.Unseen">
+                                    <button (click)="onFulfill(request.id)" pButton pRipple class="btn btn-success" i18n>Mark as
+                                        fulfilled</button>
+                                </ng-container>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </ng-container>
+    </ng-container>
+
+    <ng-template #noRequestsInstall>
+        <div class="alert alert-info" role="alert" i18n>
+            There are no requests about tech-inspection yet.
+        </div>
+    </ng-template>
+</div>
